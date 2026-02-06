@@ -1,2 +1,3 @@
 [workspace]
-members = ["webserver"]
+resolver = "3"
+members = ["webserver", "database"]

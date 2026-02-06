@@ -1,7 +1,7 @@
 ﻿use askama::Template;
 
 #[derive(Template)]
-#[template(path = "hello.html")]
+#[template(path = "index.html")]
 pub struct HelloTemplate<'a> {
     pub(crate) name: &'a str,
 }

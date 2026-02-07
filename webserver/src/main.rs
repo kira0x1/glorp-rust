@@ -8,6 +8,8 @@ use axum::response::{Html, IntoResponse, Response};
 use tower_http::trace::TraceLayer;
 use tracing::{info, Level};
 use serde::Deserialize;
+use tower_http::services::ServeDir;
+use tower_livereload::LiveReloadLayer;
 
 #[tokio::main]
 async fn main() -> Result<(), Error> {
@@ -15,18 +17,21 @@ async fn main() -> Result<(), Error> {
         .with_max_level(Level::DEBUG)
         .init();
 
-    // let hello = templater::HelloTemplate { name: "meow" };
+    let static_files = ServeDir::new("static");
+
     let app = Router::new()
         .route("/", get(index_handler))
+        .nest_service("/static", static_files)
         .fallback(|| async { AppError::NotFound })
-        .layer(TraceLayer::new_for_http());
+        .layer(TraceLayer::new_for_http())
+        .layer(LiveReloadLayer::new());
 
     let listener = tokio::net::TcpListener::bind("0.0.0.0:3000")
         .await
         .map_err(Error::Bind)?;
 
     if let Ok(addr) = listener.local_addr() {
-        info!("Listening on http://{addr}/");
+        info!("Listening on http://{addr}/?name=kira");
     }
 
     axum::serve(listener, app).await.map_err(Error::Run)

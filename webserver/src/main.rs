@@ -1,5 +1,6 @@
 mod templater;
 
+use std::fmt::Debug;
 use askama::Template;
 use axum::{Router, routing::get};
 use axum::extract::Query;
@@ -8,7 +9,7 @@ use axum::response::{Html, IntoResponse, Response};
 use tower_http::trace::TraceLayer;
 use tracing::{info, Level};
 use serde::Deserialize;
-use tower_http::services::ServeDir;
+use tower_http::services::{ServeDir, ServeFile};
 use tower_livereload::LiveReloadLayer;
 
 #[tokio::main]
@@ -17,12 +18,13 @@ async fn main() -> Result<(), Error> {
         .with_max_level(Level::DEBUG)
         .init();
 
-    let static_files = ServeDir::new("static");
+    let static_files = ServeDir::new("static")
+        .fallback(ServeFile::new("static/not_found.html"));
 
     let app = Router::new()
         .route("/", get(index_handler))
-        .nest_service("/static", static_files)
         .fallback(|| async { AppError::NotFound })
+        .nest_service("/static", static_files)
         .layer(TraceLayer::new_for_http())
         .layer(LiveReloadLayer::new());
 

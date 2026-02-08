@@ -84,3 +84,56 @@ a:active, a:hover, a:focus {
     text-decoration: underline;
     text-underline-offset: 0.3em;
 }
+
+.globe-container {
+    width: 128px;
+    height: 128px;
+    /*padding: 12px;*/
+
+    position: absolute;
+    right: 2em;
+    top: 2em;
+
+    /*background-color: #363636;*/
+    /*background-color: rgba(0, 0, 0, 0.5);*/
+    /*border: 6px solid gradient(red, blue);*/
+    background-image: url("/static/images/earthspin.gif");
+    background-position: center;
+    background-repeat: no-repeat;
+    border-radius: 100px;
+}
+
+.glorp-globe {
+    margin: auto;
+    align-content: center;
+    width: 100%;
+    height: 100%;
+    border-radius: 100%;
+    overflow: hidden;
+    position: relative;
+}
+
+.glorp-img {
+    background-image: url("/static/images/glorp_shiny.png");
+    width: 100px;
+    height: 100px;
+    position: absolute;
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    margin: auto;
+    border-radius: 100%;
+    bottom: -10px;
+}
+
+.circle::before {
+    border-radius: 100%;
+    content: '';
+    background-image: linear-gradient(to right, #c2589e 0%, #14889d 100%);
+    top: -7px;
+    left: -7px;
+    bottom: -7px;
+    right: -7px;
+    position: absolute;
+    z-index: -1;
+}

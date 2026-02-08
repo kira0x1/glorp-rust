@@ -1,17 +1,14 @@
-mod templater;
-
-use std::fmt::Debug;
 use askama::Template;
-use axum::{Router, routing::get};
-use axum::extract::Query;
 use axum::http::StatusCode;
 use axum::response::{Html, IntoResponse, Response};
-use tower_http::trace::TraceLayer;
-use tracing::{info, Level};
-use serde::Deserialize;
+use axum::{routing::get, Router};
+use std::fmt::Debug;
 use tower_http::services::{ServeDir, ServeFile};
+use tower_http::trace::TraceLayer;
 use tower_livereload::LiveReloadLayer;
+use tracing::{info, Level};
 
+//noinspection HttpUrlsUsage
 #[tokio::main]
 async fn main() -> Result<(), Error> {
     tracing_subscriber::fmt()
@@ -39,7 +36,7 @@ async fn main() -> Result<(), Error> {
     axum::serve(listener, app).await.map_err(Error::Run)
 }
 
-#[derive(displaydoc::Display, pretty_error_debug::Debug, thiserror::Error)]
+#[derive(displaydoc::Display, Debug, thiserror::Error)]
 enum Error {
     /// could not bind socket
     Bind(#[source] std::io::Error),
@@ -88,25 +85,11 @@ impl IntoResponse for AppError {
     }
 }
 
-/// This type collects the query parameter `?name=` (if present)
-#[derive(Debug, Deserialize)]
-struct IndexHandlerQuery {
-    #[serde(default)]
-    name: String,
-}
-
-async fn index_handler(
-    Query(query): Query<IndexHandlerQuery>
-) -> Result<impl IntoResponse, AppError> {
+async fn index_handler() -> Result<impl IntoResponse, AppError> {
     #[derive(Debug, Template)]
     #[template(path = "index.html")]
-    struct Tmpl {
-        name: String,
-    }
-
-    let template = Tmpl {
-        name: query.name,
-    };
+    struct Tmpl {}
+    let template = Tmpl {};
 
     Ok(Html(template.render()?))
 }

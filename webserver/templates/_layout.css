@@ -32,6 +32,7 @@ header {
     text-align: center;
     border-radius: 4px;
     margin: auto;
+    border: inset;
 }
 
 #ar {
@@ -45,15 +46,16 @@ header {
     border-radius: 4px;
     padding: 0.5em 1em;
     margin: 2em 0;
-    color: #555;
     font-weight: 100;
     font-family: consolas;
     max-width: 15em;
+    border: inset;
     /*border: 2px solid #4d7c8a;*/
     display: flex;
 }
 
 #inner-text {
+    color: #555;
     margin: auto 0.5em;
 }
 
@@ -100,7 +102,8 @@ a:active, a:hover, a:focus {
     background-image: url("/static/images/earthspin.gif");
     background-position: center;
     background-repeat: no-repeat;
-    border-radius: 100px;
+    /*border-radius: 100px;*/
+    border: 5px inset;
 }
 
 .glorp-globe {
@@ -108,7 +111,7 @@ a:active, a:hover, a:focus {
     align-content: center;
     width: 100%;
     height: 100%;
-    border-radius: 100%;
+    /*border-radius: 100%;*/
     overflow: hidden;
     position: relative;
 }
@@ -122,8 +125,14 @@ a:active, a:hover, a:focus {
     background-position: center;
     background-repeat: no-repeat;
     margin: auto;
-    border-radius: 100%;
+    /*border-radius: 100%;*/
     bottom: -10px;
+}
+
+.glorp-text {
+    color: #a02e7e;
+    padding: 10px;
+    font-family: ariel;
 }
 
 .circle::before {
@@ -136,4 +145,47 @@ a:active, a:hover, a:focus {
     right: -7px;
     position: absolute;
     z-index: -1;
+}
+
+.nav {
+    width: 11em;
+    border: 3px inset;
+    position: absolute;
+    top: 1em;
+    bottom: 1em;
+    left: 1em;
+    text-decoration: none;
+    list-style: none;
+
+    ul {
+        padding: 7px;
+        margin: 2px 0;
+    }
+
+    li {
+        list-style: none;
+        border: 4px outset white;
+        height: 40px;
+        margin-bottom: 10px;
+        /*border-color: #c2589e;*/
+    }
+
+    a {
+        /*background-color: #ccc;*/
+        width: 100%;
+        height: 100%;
+        display: block;
+        text-align: center;
+        align-content: center;
+        text-decoration: none;
+        /*color: #14889d;*/
+        color: white;
+        cursor: pointer;
+        background-color: #e186b5;
+    }
+
+    a:hover {
+        background-color: #ddd;
+
+    }
 }

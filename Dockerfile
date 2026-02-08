@@ -1,6 +1,4 @@
-FROM rust:1.49
+FROM rustlang/rust:nightly-slim
 COPY ./ ./
 RUN cargo build --release
 CMD ["./target/release/webserver"]
-
-

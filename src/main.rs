@@ -3,9 +3,10 @@ use axum::http::StatusCode;
 use axum::response::{Html, IntoResponse, Response};
 use axum::{routing::get, Router};
 use std::fmt::Debug;
+use tower::ServiceBuilder;
 use tower_http::services::{ServeDir, ServeFile};
 use tower_http::trace::TraceLayer;
-use tower_livereload::LiveReloadLayer;
+use tower_http::{cors::{CorsLayer}};
 use tracing::{info, Level};
 
 //noinspection HttpUrlsUsage
@@ -15,6 +16,8 @@ async fn main() -> Result<(), Error> {
         .with_max_level(Level::DEBUG)
         .init();
 
+    let cors = CorsLayer::new();
+
     let static_files = ServeDir::new("static")
         .fallback(ServeFile::new("static/not_found.html"));
 
@@ -22,15 +25,17 @@ async fn main() -> Result<(), Error> {
         .route("/", get(index_handler))
         .fallback(|| async { AppError::NotFound })
         .nest_service("/static", static_files)
-        .layer(TraceLayer::new_for_http())
-        .layer(LiveReloadLayer::new());
+        .layer(ServiceBuilder::new()
+            .layer(TraceLayer::new_for_http())
+            .layer(cors.clone())
+        );
 
     let listener = tokio::net::TcpListener::bind("0.0.0.0:3000")
         .await
         .map_err(Error::Bind)?;
 
     if let Ok(addr) = listener.local_addr() {
-        info!("Listening on http://{addr}/?name=kira");
+        info!("Listening on http://{addr}");
     }
 
     axum::serve(listener, app).await.map_err(Error::Run)

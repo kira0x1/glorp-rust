@@ -3,32 +3,36 @@
 
 {%- block content -%}
 
-<div class="globe-container">
-    <!--    <div class="circle"></div>-->
-    <div class="glorp-globe">
-        <div class="glorp-img"></div>
+<div class="container">
+    <div class="nav">
+        <ul>
+            <li>
+                <a>home</a>
+            </li>
+
+            <li><a href="https://github.com/kira0x1/glorp-rust">github</a></li>
+        </ul>
     </div>
-    <div class="glorp-text">i travel</div>
-</div>
 
-<div class="nav">
-    <ul>
-        <li>
-            <a>home</a>
-        </li>
+    <div class="center-container">
+        <header>
+            <span lang="ar" id="ar">غلرب</span>
+        </header>
 
-        <li><a href="https://github.com/kira0x1/glorp-rust">github</a></li>
-    </ul>
-</div>
-
-<header>
-    <span lang="ar" id="ar">غلرب</span>
-</header>
-
-<div class="info-box">
-    <div class="icon-container">
-        <img class="icon" src="/static/images/glorp_shiny.png"/>
+        <div class="info-box">
+            <div class="icon-container">
+                <img class="icon" src="/static/images/glorp_shiny.png"/>
+            </div>
+            <span id="inner-text">welcome to my home</span>
+        </div>
     </div>
-    <span id="inner-text">welcome to my home</span>
+
+    <div class="globe-container">
+        <!--    <div class="circle"></div>-->
+        <div class="glorp-globe">
+            <div class="glorp-img"></div>
+        </div>
+        <div class="glorp-text">i travel</div>
+    </div>
 </div>
 {%- endblock -%}

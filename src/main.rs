@@ -1,12 +1,16 @@
+mod config;
+
 use askama::Template;
 use axum::http::StatusCode;
 use axum::response::{Html, IntoResponse, Response};
 use axum::{routing::get, Router};
 use std::fmt::Debug;
+use rand::seq::IndexedRandom;
 use tower::ServiceBuilder;
 use tower_http::services::{ServeDir, ServeFile};
 use tower_http::trace::TraceLayer;
 use tower_http::{cors::{CorsLayer}};
+use tower_livereload::LiveReloadLayer;
 use tracing::{info, Level};
 
 //noinspection HttpUrlsUsage
@@ -26,6 +30,7 @@ async fn main() -> Result<(), Error> {
         .fallback(|| async { AppError::NotFound })
         .nest_service("/static", static_files)
         .layer(ServiceBuilder::new()
+            .layer(LiveReloadLayer::new())
             .layer(TraceLayer::new_for_http())
             .layer(cors.clone())
         );
@@ -65,10 +70,6 @@ enum AppError {
 /// This is your error handler
 impl IntoResponse for AppError {
     fn into_response(self) -> Response {
-        // It uses an askama template to display its content.
-        // The member `lang` is used by "_layout.html" which "error.html" extends. Even though it
-        // is always the fallback language English in here, "_layout.html" expects to be able to
-        // access this field, so you have to provide it.
         #[derive(Debug, Template)]
         #[template(path = "error.html")]
         struct Tmpl {
@@ -93,8 +94,15 @@ impl IntoResponse for AppError {
 async fn index_handler() -> Result<impl IntoResponse, AppError> {
     #[derive(Debug, Template)]
     #[template(path = "index.html")]
-    struct Tmpl {}
-    let template = Tmpl {};
+    struct Tmpl<'a> {
+        glorp_message: &'a str,
 
+    }
+
+    // pick random glorp message
+    let x = config::GLORP_MESSAGES.choose(&mut rand::rng()).unwrap();
+    // println!("chose message: {:?}", x);
+
+    let template = Tmpl { glorp_message: x };
     Ok(Html(template.render()?))
 }

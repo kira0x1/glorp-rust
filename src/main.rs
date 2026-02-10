@@ -10,7 +10,6 @@ use tower::ServiceBuilder;
 use tower_http::cors::CorsLayer;
 use tower_http::services::{ServeDir, ServeFile};
 use tower_http::trace::TraceLayer;
-use tower_livereload::LiveReloadLayer;
 use tracing::{info, Level};
 
 //noinspection HttpUrlsUsage
@@ -30,7 +29,6 @@ async fn main() -> Result<(), Error> {
         .fallback(|| async { AppError::NotFound })
         .nest_service("/static", static_files)
         .layer(ServiceBuilder::new()
-            .layer(LiveReloadLayer::new())
             .layer(TraceLayer::new_for_http())
             .layer(cors.clone())
         );

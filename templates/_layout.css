@@ -61,25 +61,38 @@ header {
 .info-box {
     background-color: #ededed;
     border-radius: 4px;
-    padding: 0.5em 1em;
-    margin: 2em 0;
+    padding: 0 0.4em;
+    margin: 0;
     font-weight: 100;
     font-family: consolas;
-    max-width: 15em;
     border: inset;
-    /*border: 2px solid #4d7c8a;*/
     display: flex;
+    width: 14em;
+    height: 50px;
 }
 
-#inner-text {
+.status-grid {
+    display: flex;
+    gap: 8px;
+    margin: 1em 0;
+    flex-wrap: wrap;
+}
+
+.status-text {
     color: #555;
     margin: auto 0.5em;
 }
 
 .icon {
     width: 42px;
-    /*padding: 5px;*/
-    /*margin-right: 10px;*/
+    display: block;
+}
+
+.icon-container {
+    display: inline;
+    height: 100%;
+    width: 3em;
+    align-content: end;
 }
 
 h1 {

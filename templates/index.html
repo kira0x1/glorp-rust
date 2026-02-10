@@ -1,5 +1,5 @@
 {% extends "_layout.html" %}
-
+{% import "macros.html" as scope %}
 
 {%- block content -%}
 
@@ -19,11 +19,17 @@
             <span lang="ar" id="ar">غلرب</span>
         </header>
 
-        <div class="info-box">
-            <div class="icon-container">
-                <img class="icon" src="/static/images/glorp_shiny.png"/>
+        <div class="status-grid">
+            {% for status in glorp_status %}
+            {{ scope::render_dialog(status.message, status.icon) }}
+            {% endfor %}
+
+            <div class="info-box">
+                <div class="icon-container">
+                    <img class="icon" src="/static/images/glorp_shiny.png"/>
+                </div>
+                <span class="status-text">welcome to my home</span>
             </div>
-            <span id="inner-text">welcome to my home</span>
         </div>
     </div>
 
@@ -31,7 +37,7 @@
         <div class="glorp-globe">
             <div class="glorp-img"></div>
         </div>
-        <div class="glorp-text">{{ glorp_message }}</div>
+        <div class="glorp-text">{{ globe_message }}</div>
     </div>
 </div>
 

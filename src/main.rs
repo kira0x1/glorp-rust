@@ -4,12 +4,12 @@ use askama::Template;
 use axum::http::StatusCode;
 use axum::response::{Html, IntoResponse, Response};
 use axum::{routing::get, Router};
-use std::fmt::Debug;
 use rand::seq::IndexedRandom;
+use std::fmt::Debug;
 use tower::ServiceBuilder;
+use tower_http::cors::CorsLayer;
 use tower_http::services::{ServeDir, ServeFile};
 use tower_http::trace::TraceLayer;
-use tower_http::{cors::{CorsLayer}};
 use tower_livereload::LiveReloadLayer;
 use tracing::{info, Level};
 
@@ -92,17 +92,34 @@ impl IntoResponse for AppError {
 }
 
 async fn index_handler() -> Result<impl IntoResponse, AppError> {
+    #[derive(Debug)]
+    struct IconBox<'a> {
+        message: &'a str,
+        icon: &'a str,
+    }
+
     #[derive(Debug, Template)]
     #[template(path = "index.html")]
     struct Tmpl<'a> {
-        glorp_message: &'a str,
-
+        globe_message: &'a str,
+        glorp_status: Vec<IconBox<'a>>,
     }
 
     // pick random glorp message
     let x = config::GLORP_MESSAGES.choose(&mut rand::rng()).unwrap();
-    // println!("chose message: {:?}", x);
+    println!("chose message: {:?}", x);
 
-    let template = Tmpl { glorp_message: x };
+    let data: Vec<IconBox> = vec![
+        IconBox {
+            message: "i have a bow",
+            icon: "/static/images/glorpBow.png"
+        }
+    ];
+
+    let template = Tmpl {
+        globe_message: x,
+        glorp_status: data,
+    };
+
     Ok(Html(template.render()?))
 }

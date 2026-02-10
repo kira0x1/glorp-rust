@@ -1,0 +1,13 @@
+﻿{% macro render_dialog(content="", icon="") -%}
+<div class="info-box">
+    {% if icon.len() > 0 %}
+    <div class="icon-container">
+        <img class="icon" src={{icon}}/>
+    </div>
+    {% endif %}
+
+    <span class="status-text">
+        {{ content }}
+    </span>
+</div>
+{%- endmacro %}

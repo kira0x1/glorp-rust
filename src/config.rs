@@ -1,4 +1,5 @@
 ﻿pub const GLORP_MESSAGES: &[&str] = &[
+    "i tavel...",
     "glorp travels the world",
     "space...",
     "the moon has many dangers...",

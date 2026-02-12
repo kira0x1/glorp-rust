@@ -1,36 +1,47 @@
 mod config;
+mod parser;
 
 use askama::Template;
 use axum::http::StatusCode;
 use axum::response::{Html, IntoResponse, Response};
-use axum::{routing::get, Router};
+use axum::{Router, routing::get};
 use rand::seq::IndexedRandom;
 use std::fmt::Debug;
 use tower::ServiceBuilder;
 use tower_http::cors::CorsLayer;
 use tower_http::services::{ServeDir, ServeFile};
 use tower_http::trace::TraceLayer;
-use tracing::{info, Level};
+use tracing::info;
 
 //noinspection HttpUrlsUsage
 #[tokio::main]
 async fn main() -> Result<(), Error> {
+    let args = parser::parse_args();
+
+    // let trace_filter = match args.dev {
+    //     0 => Level::TRACE, // production
+    //     1 => Level::INFO,  // dev
+    //     _ => Level::DEBUG,
+    // };
+
+    println!("dev: {:?}, trace: {:?}", args.is_dev, args.trace_level);
+
     tracing_subscriber::fmt()
-        .with_max_level(Level::DEBUG)
+        .with_max_level(args.trace_level)
         .init();
 
     let cors = CorsLayer::new();
 
-    let static_files = ServeDir::new("static")
-        .fallback(ServeFile::new("static/not_found.html"));
+    let static_files = ServeDir::new("static").fallback(ServeFile::new("static/not_found.html"));
 
     let app = Router::new()
         .route("/", get(index_handler))
         .fallback(|| async { AppError::NotFound })
         .nest_service("/static", static_files)
-        .layer(ServiceBuilder::new()
-            .layer(TraceLayer::new_for_http())
-            .layer(cors.clone())
+        .layer(
+            ServiceBuilder::new()
+                .layer(TraceLayer::new_for_http())
+                .layer(cors.clone()),
         );
 
     let listener = tokio::net::TcpListener::bind("0.0.0.0:3000")
@@ -52,7 +63,6 @@ enum Error {
     Run(#[source] std::io::Error),
 }
 
-
 /// This enum contains any error that could occur while handling an incoming request.
 ///
 /// In a real application you would most likely have multiple error sources, e.g. database errors,
@@ -63,7 +73,6 @@ enum AppError {
     /// could not render template
     Render(#[from] askama::Error),
 }
-
 
 /// This is your error handler
 impl IntoResponse for AppError {
@@ -78,9 +87,7 @@ impl IntoResponse for AppError {
             AppError::NotFound => StatusCode::NOT_FOUND,
             AppError::Render(_) => StatusCode::INTERNAL_SERVER_ERROR,
         };
-        let tmpl = Tmpl {
-            err: self,
-        };
+        let tmpl = Tmpl { err: self };
         if let Ok(body) = tmpl.render() {
             (status, Html(body)).into_response()
         } else {
@@ -105,14 +112,17 @@ async fn index_handler() -> Result<impl IntoResponse, AppError> {
 
     // pick random glorp message
     let x = config::GLORP_MESSAGES.choose(&mut rand::rng()).unwrap();
-    println!("chose message: {:?}", x);
 
-    let data: Vec<IconBox> = vec![
-        IconBox {
-            message: "i have a bow",
-            icon: "/static/images/glorpBow.png"
-        }
-    ];
+    let args = parser::parse_args();
+
+    if args.is_dev {
+        println!("chose message: {:?}", x);
+    }
+
+    let data: Vec<IconBox> = vec![IconBox {
+        message: "i have a bow",
+        icon: "/static/images/glorpBow.png",
+    }];
 
     let template = Tmpl {
         globe_message: x,

@@ -9,11 +9,13 @@ pub struct Args {
     pub dev: bool,
 }
 
+// config parsed from args
 pub struct DevConfig {
     pub is_dev: bool,
     pub trace_level: Level,
 }
 
+// Returns Config
 pub fn parse_args() -> DevConfig {
     let args = Args::parse();
 

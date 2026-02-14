@@ -18,12 +18,6 @@ use tracing::info;
 async fn main() -> Result<(), Error> {
     let args = parser::parse_args();
 
-    // let trace_filter = match args.dev {
-    //     0 => Level::TRACE, // production
-    //     1 => Level::INFO,  // dev
-    //     _ => Level::DEBUG,
-    // };
-
     println!("dev: {:?}, trace: {:?}", args.is_dev, args.trace_level);
 
     tracing_subscriber::fmt()

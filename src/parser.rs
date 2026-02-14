@@ -17,10 +17,8 @@ pub struct DevConfig {
 pub fn parse_args() -> DevConfig {
     let args = Args::parse();
 
-    let dev_config = DevConfig {
+    DevConfig {
         is_dev: args.dev,
         trace_level: if args.dev { Level::INFO } else { Level::TRACE },
-    };
-
-    return dev_config;
+    }
 }

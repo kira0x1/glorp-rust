@@ -1,9 +1,16 @@
 pipeline {
-    agent { dockerfile true }
+    agent any
     stages {
-        stage('Test') {
+        stage('Build') {
             steps {
-                sh 'cargo --version'
+                sh "echo \"kira0x1/rustci-test:${env.BUILD_NUMBER}\""
+                sh "docker build -t \"kira0x1/rustci-test:${env.BUILD_NUMBER}\" ."
+            }
+        }
+        stage('Push') {
+            steps {
+                sh "docker image ls"
+                sh "docker image push \"kira0x1/rustci-test:${env.BUILD_NUMBER}\""
             }
         }
     }

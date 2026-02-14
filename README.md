@@ -1,6 +1,6 @@
-# [glorp.io](https://glorp.io)
+repo for [glorp.io](https://glorp.io) 🐈‍⬛🌑💫
 
-# usage
+## usage
 
 run:<br/>
 `cargo run -- --dev`

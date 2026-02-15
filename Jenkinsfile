@@ -1,16 +1,25 @@
 pipeline {
     agent any
+    environment {
+        IMAGE_NAME = "kira0x1/glorp-rust"
+    }
     stages {
         stage('Build') {
             steps {
-                sh "echo \"kira0x1/glorp-rust:${env.BUILD_NUMBER}\""
-                sh "docker build -t \"kira0x1/glorp-rust:${env.BUILD_NUMBER}\" ."
+                sh """
+                    docker build \
+                      -t ${IMAGE_NAME}:${BUILD_NUMBER} \
+                      -t ${IMAGE_NAME}:latest \
+                      .
+                """
             }
         }
         stage('Push') {
             steps {
-                sh "docker image ls"
-                // sh "docker image push \"kira0x1/rustci-test:${env.BUILD_NUMBER}\""
+                sh """
+                    docker push ${IMAGE_NAME}:${BUILD_NUMBER}
+                    docker push ${IMAGE_NAME}:latest
+                """
             }
         }
     }

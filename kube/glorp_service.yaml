@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: glorp-service
+  labels:
+    app: glorp
+spec:
+  ports:
+  - port: 3000
+    protocol: TCP
+  type: NodePort
+  selector:
+    app: glorp

@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: glorp-deployment
+  labels:
+    app: glorp
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: glorp
+  template:
+    metadata:
+      labels:
+        app: glorp
+    spec:
+      containers:
+      - name: glorp
+        image: kira0x1/glorp-rust:latest

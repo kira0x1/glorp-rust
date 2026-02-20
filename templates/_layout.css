@@ -218,6 +218,19 @@ a:focus {
     }
 }
 
+.btn {
+    border-style: dashed;
+    cursor: pointer;
+}
+
+.btn > * {
+    user-select: none;
+}
+
+.btn:hover {
+    background-color: #c9c9c9;
+}
+
 @media (max-width: 960px) {
     .container {
         flex-direction: column;

@@ -8,7 +8,7 @@ run:<br/>
  *--dev gives cleaner output*
 
  live reloading:<br/>
-`cargo watch -x run`
+`cargo watch -x="run -- --dev"`
 
 prod / trace logs:<br/>
 `cargo run`

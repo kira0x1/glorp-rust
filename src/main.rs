@@ -1,6 +1,9 @@
 mod config;
 mod parser;
+mod pages;
 
+use pages::IndexTmpl;
+use pages::IconBox;
 use askama::Template;
 use axum::http::StatusCode;
 use axum::response::{Html, IntoResponse, Response};
@@ -92,19 +95,6 @@ impl IntoResponse for AppError {
 }
 
 async fn index_handler() -> Result<impl IntoResponse, AppError> {
-    #[derive(Debug)]
-    struct IconBox<'a> {
-        message: &'a str,
-        icon: &'a str,
-    }
-
-    #[derive(Debug, Template)]
-    #[template(path = "index.html")]
-    struct Tmpl<'a> {
-        globe_message: &'a str,
-        glorp_status: Vec<IconBox<'a>>,
-    }
-
     // pick random glorp message
     let x = config::GLORP_MESSAGES.choose(&mut rand::rng()).unwrap();
 
@@ -119,7 +109,7 @@ async fn index_handler() -> Result<impl IntoResponse, AppError> {
         icon: "/static/images/glorpBow.png",
     }];
 
-    let template = Tmpl {
+    let template = IndexTmpl {
         globe_message: x,
         glorp_status: data,
     };

@@ -34,6 +34,15 @@ pipeline {
                 """
             }
         }
+        stage('Deploy') {
+            agent { label 'kubernetes' }
+            steps {
+                sh """
+                    microk8s kubectl apply -f ./kube/glorp_deploy.yaml
+                    microk8s kubectl apply -f ./kube/glorp_service.yaml
+                """
+            }
+        }
     }
     post {
         success {

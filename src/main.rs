@@ -18,6 +18,7 @@ use tracing::info;
 async fn main() -> Result<(), Error> {
     let args = parser::parse_args();
 
+    println!("version {:?}", "GLORP VERSION MEOW");
     println!("dev: {:?}, trace: {:?}", args.is_dev, args.trace_level);
 
     tracing_subscriber::fmt()

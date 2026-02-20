@@ -1,13 +1,13 @@
 mod config;
-mod parser;
 mod pages;
+mod parser;
 
-use pages::IndexTmpl;
-use pages::IconBox;
 use askama::Template;
 use axum::http::StatusCode;
 use axum::response::{Html, IntoResponse, Response};
 use axum::{Router, routing::get};
+use pages::IconBox;
+use pages::IndexTmpl;
 use rand::seq::IndexedRandom;
 use std::fmt::Debug;
 use tower::ServiceBuilder;
@@ -30,12 +30,16 @@ async fn main() -> Result<(), Error> {
 
     let cors = CorsLayer::new();
 
-    let static_files = ServeDir::new("static").fallback(ServeFile::new("static/not_found.html"));
+    let static_files = ServeDir::new("static")
+        .fallback(ServeFile::new("static/not_found.html"));
+
+    let cow_txt = ServeFile::new("static/cow.txt");
 
     let app = Router::new()
         .route("/", get(index_handler))
         .fallback(|| async { AppError::NotFound })
         .nest_service("/static", static_files)
+        .nest_service("/cow.txt", cow_txt)
         .layer(
             ServiceBuilder::new()
                 .layer(TraceLayer::new_for_http())

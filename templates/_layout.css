@@ -46,9 +46,9 @@ header {
     background-color: #4d7c8a;
     padding: 1em;
     text-align: center;
-    border-radius: 4px;
+    border-radius: 0;
     width: 100%;
-    border: inset;
+    border: inset 6px;
     box-sizing: border-box;
 }
 
@@ -61,11 +61,11 @@ header {
 
 .info-image {
     background-color: #ededed;
-    border-radius: 4px;
+    border-radius: 0;
     margin: 0;
     font-weight: 100;
     font-family: consolas;
-    border: inset;
+    border: inset 4px;
     display: flex;
     flex-direction: row;
     width: 14em;
@@ -74,7 +74,7 @@ header {
 
     .big-image {
         display: block;
-        border: 6px outset #d0d0d0;
+        border: 6px outset #fff;
     }
 
     .status-text {
@@ -88,7 +88,7 @@ header {
 
 .info-box {
     background-color: #ededed;
-    border-radius: 4px;
+    border-radius: 0;
     padding: 0 0.4em;
     margin: 0;
     font-weight: 100;
@@ -231,7 +231,8 @@ a:focus {
         width: 100%;
         height: 100%;
         display: block;
-        text-align: center;
+        text-align: left;
+        text-indent: 0.8em;
         align-content: center;
         text-decoration: none;
         /*color: #14889d;*/
@@ -251,7 +252,7 @@ a:focus {
     cursor: pointer;
 }
 
-.btn > * {
+.btn>* {
     user-select: none;
 }
 
@@ -259,7 +260,22 @@ a:focus {
     background-color: #c9c9c9;
 }
 
-@media (max-width: 960px) {
+.wide {
+    width: 100%;
+    height: 10vh;
+    box-sizing: border-box;
+    background-color: #b4c8cb;
+
+    .status-text {
+        color: white;
+        font-style: italic;
+        font-size: 24px;
+        font-family: serif;
+        font-weight: 100;
+    }
+}
+
+@media (max-width: 980px) {
     .container {
         flex-direction: column;
     }

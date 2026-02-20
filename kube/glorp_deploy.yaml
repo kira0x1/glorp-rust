@@ -17,3 +17,4 @@ spec:
       containers:
       - name: glorp
         image: kira0x1/glorp-rust:latest
+        imagePullPolicy: Always

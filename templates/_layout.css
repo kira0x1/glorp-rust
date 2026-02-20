@@ -35,7 +35,7 @@ body {
 
 .center-container {
     /*padding: 0 20px;*/
-    width: 40em;
+    width: 47em;
     margin: 0 auto;
     display: flex;
     flex-direction: column;
@@ -58,6 +58,34 @@ header {
     font-family: "Qahiri";
 }
 
+
+.info-image {
+    background-color: #ededed;
+    border-radius: 4px;
+    margin: 0;
+    font-weight: 100;
+    font-family: consolas;
+    border: inset;
+    display: flex;
+    flex-direction: row;
+    width: 14em;
+    padding: 0.4em;
+    height: 120px;
+
+    .big-image {
+        display: block;
+        border: 6px outset #d0d0d0;
+    }
+
+    .status-text {
+        width: 90%;
+        padding: 0;
+        text-align: left;
+        margin: 0 .3em;
+    }
+}
+
+
 .info-box {
     background-color: #ededed;
     border-radius: 4px;
@@ -73,7 +101,7 @@ header {
 
 .status-grid {
     display: flex;
-    gap: 8px;
+    gap: 0.8em;
     margin: 1em 0;
     flex-wrap: wrap;
 }

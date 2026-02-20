@@ -40,7 +40,7 @@ pipeline {
                 sh """
                     microk8s kubectl apply -f ./kube/glorp_deploy.yaml
                     microk8s kubectl apply -f ./kube/glorp_service.yaml
-                    kubectl rollout restart deployment glorp-deployment
+                    microk8s kubectl rollout restart deployment glorp-deployment
                 """
             }
         }

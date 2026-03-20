@@ -1,14 +1,25 @@
-repo for [glorp.io](https://glorp.io) 🐈‍⬛🌑💫
+repo for glorp's home
+[glorp.io](https://glorp.io) 🐈‍⬛🌑💫
 
 ## usage
-
 run:<br/>
-`cargo run -- --dev`
+
+```
+cargo run -- --dev
+```
+> *--dev gives cleaner output*
+
 <br/>
- *--dev gives cleaner output*
 
- live reloading:<br/>
-`cargo watch -x="run -- --dev"`
 
-prod / trace logs:<br/>
-`cargo run`
+ live reloading:
+ <br/>
+```
+cargo watch -x="run -- --dev"
+```
+
+prod / trace logs:
+<br/>
+```
+cargo run
+```

@@ -21,7 +21,6 @@ use tracing::info;
 async fn main() -> Result<(), Error> {
     let args = parser::parse_args();
 
-    println!("version {:?}", "GLORP VERSION MEOW");
     println!("dev: {:?}, trace: {:?}", args.is_dev, args.trace_level);
 
     tracing_subscriber::fmt()
@@ -51,8 +50,12 @@ async fn main() -> Result<(), Error> {
         .map_err(Error::Bind)?;
 
     if let Ok(addr) = listener.local_addr() {
-        info!("Listening on http://{addr}");
+        info!("\n\nListening on http://{addr}");
     }
+
+    // Print cargo version
+    let version = env!("CARGO_PKG_VERSION");
+    println!("Version: {:?}", version);
 
     axum::serve(listener, app).await.map_err(Error::Run)
 }

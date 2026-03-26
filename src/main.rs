@@ -92,7 +92,9 @@ impl IntoResponse for AppError {
             AppError::NotFound => StatusCode::NOT_FOUND,
             AppError::Render(_) => StatusCode::INTERNAL_SERVER_ERROR,
         };
+
         let tmpl = Tmpl { err: self };
+
         if let Ok(body) = tmpl.render() {
             (status, Html(body)).into_response()
         } else {
@@ -105,6 +107,7 @@ async fn index_handler() -> Result<impl IntoResponse, AppError> {
     // pick random glorp message
     let x = config::GLORP_MESSAGES.choose(&mut rand::rng()).unwrap();
 
+    let version = env!("CARGO_PKG_VERSION");
     let args = parser::parse_args();
 
     if args.is_dev {
@@ -118,6 +121,7 @@ async fn index_handler() -> Result<impl IntoResponse, AppError> {
 
     let template = IndexTmpl {
         globe_message: x,
+        glorp_version: format!("version: {}", version),
         glorp_status: data,
     };
 

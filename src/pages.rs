@@ -11,5 +11,6 @@ pub struct IconBox<'a> {
 #[template(path = "index.html")]
 pub struct IndexTmpl<'a> {
     pub globe_message: &'a str,
+    pub glorp_version: String,
     pub glorp_status: Vec<IconBox<'a>>,
 }

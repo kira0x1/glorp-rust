@@ -2,49 +2,52 @@
 content -%}
 
 <div class="container">
-  <div class="nav">
-    <ul>
-      <li>
-        <a>home</a>
-      </li>
+    <div class="nav">
+        <ul>
+            <li>
+                <a>home</a>
+            </li>
 
-      <li>
-        <a href="/cow.txt">cow</a>
-      </li>
+            <li>
+                <a href="/cow.txt">cow</a>
+            </li>
 
-      <li><a href="https://github.com/kira0x1/glorp-rust">github</a></li>
-    </ul>
-  </div>
+            <li><a href="https://github.com/kira0x1/glorp-rust">github</a></li>
+        </ul>
+    </div>
 
-  <div class="center-container">
-    <header>
-      <span lang="ar" id="ar">غلرب</span>
-    </header>
+    <div class="center-container">
+        <header>
+            <span lang="ar" id="ar">غلرب</span>
+        </header>
 
-    <div class="status-grid">
-      {% for status in glorp_status %} {{ scope::render_dialog(status.message,
-      status.icon) }} {% endfor %}
+        <div class="status-grid">
+            {% for status in glorp_status %} {{ scope::render_dialog(status.message,
+            status.icon) }} {% endfor %}
 
-      <div class="info-box">
-        <div class="icon-container">
-          <img class="icon" src="/static/images/glorp_shiny.png" />
+            <div class="info-box">
+                <div class="icon-container">
+                    <img class="icon" src="/static/images/glorp_shiny.png"/>
+                </div>
+                <span class="status-text">welcome to my home</span>
+            </div>
+
+            <div class="info-image wide">
+                <img class="big-image" src="/static/images/glorp_gun.jpg"/>
+                <span class="status-text">glorp has guns</span>
+            </div>
         </div>
-        <span class="status-text">welcome to my home</span>
-      </div>
-
-      <div class="info-image wide">
-        <img class="big-image" src="/static/images/glorp_gun.jpg" />
-        <span class="status-text">glorp has guns</span>
-      </div>
     </div>
-  </div>
 
-  <div class="globe-container">
-    <div class="glorp-globe">
-      <div class="glorp-img"></div>
+    <div class="globe-container">
+        <div class="glorp-globe">
+            <div class="glorp-img"></div>
+        </div>
+        <div class="glorp-text">{{ globe_message }}</div>
     </div>
-    <div class="glorp-text">{{ globe_message }}</div>
-  </div>
 </div>
 
+<script>
+    console.log("{{ glorp_version }}")
+</script>
 {%- endblock -%}

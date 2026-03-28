@@ -119,6 +119,7 @@ async fn index_handler() -> Result<impl IntoResponse, AppError> {
         icon: "/static/images/glorpBow.png",
     }];
 
+
     let template = IndexTmpl {
         globe_message: x,
         glorp_version: format!("version: {}", version),

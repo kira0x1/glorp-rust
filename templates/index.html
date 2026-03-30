@@ -1,6 +1,7 @@
 {% extends "_layout.html" %}
 {% import "macros.html" as scope %}
 {%- block content -%}
+
 <div class="container">
     <div class="nav">
         <ul>
@@ -22,8 +23,7 @@
         </header>
 
         <div class="status-grid">
-            {% for status in glorp_status %} {{ scope::render_dialog(status.message,
-            status.icon) }} {% endfor %}
+            {% for status in glorp_status %} {{ scope::render_dialog(status.message, status.icon) }} {% endfor %}
 
             <div class="info-box">
                 <div class="icon-container">
@@ -37,6 +37,9 @@
                 <span class="status-text">glorp has guns</span>
             </div>
         </div>
+
+        <iframe src="/static/pc.html">
+        </iframe>
     </div>
 
     <div class="globe-container">

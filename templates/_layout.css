@@ -254,7 +254,7 @@ a:focus {
     cursor: pointer;
 }
 
-.btn>* {
+.btn > * {
     user-select: none;
 }
 

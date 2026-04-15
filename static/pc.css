@@ -1,0 +1,12 @@
+﻿body {
+}
+
+.pc-window {
+    display: flex;
+    gap: 10px;
+}
+
+
+#glorp-feeder {
+    height: 100px;
+}

@@ -3,11 +3,13 @@
 <head>
     <meta charset="UTF-8"/>
     <link rel="stylesheet" href="https://unpkg.com/xp.css"/>
+    <link rel="stylesheet" href="./pc.css"/>
     <title>pc</title>
 </head>
 <body>
 <div class="pc-window">
-    <div class="window" style="margin: 32px; width: 250px">
+    <!-- Glorp Feed Window -->
+    <div class="window" id="glorp-feeder" style="width: 250px;">
         <div class="title-bar">
             <div class="title-bar-text">
                 Glorp Feeder
@@ -19,12 +21,35 @@
                 <button aria-label="Close"></button>
             </div>
         </div>
+
         <div class="window-body">
             <p>Feed Glorp?</p>
             <section class="field-row" style="justify-content: flex-end">
                 <button>YES 😄</button>
                 <button>No 🥺</button>
             </section>
+        </div>
+    </div>
+
+    <div class="window" id="console">
+        <div class="title-bar">
+            <div class="title-bar-text">
+                Command Line
+            </div>
+
+            <div class="title-bar-controls">
+                <button aria-label="Minimize"></button>
+                <button aria-label="Maximize"></button>
+                <button aria-label="Close"></button>
+            </div>
+        </div>
+        <div class="window-body">
+            <pre>
+Microsoft&#10094;R&#10095; Windows DOS
+&#10094;C&#10095; Copyright Microsoft Corp 1990-2001.
+<br>
+C:&#92;WINDOWS&#92;SYSTEM32> meow...
+            </pre>
         </div>
     </div>
 </div>

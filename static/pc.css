@@ -1,12 +1,38 @@
-﻿body {
+﻿.pc-window {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px;
+    align-content: space-between;
 }
 
-.pc-window {
-    display: flex;
-    gap: 10px;
+#console {
+    margin-top: 20px;
+    /*width: 90%;*/
+    align-self: center;
 }
 
 
 #glorp-feeder {
     height: 100px;
+}
+
+#progress-bar {
+    display: block;
+    /*width: 160px;*/
+    /*justify-self: flex-end;*/
+    /*align-self: flex-start;*/
+}
+
+#bars {
+    align-self: center;
+    width: 460px;
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+
+    progress {
+        width: auto;
+        flex-grow: 1;
+    }
 }

@@ -1,15 +1,13 @@
 ﻿.pc-window {
     display: flex;
-    flex-direction: column;
     gap: 10px;
     padding: 10px;
     align-content: space-between;
+    flex-wrap: wrap;
 }
 
 #console {
-    margin-top: 20px;
-    /*width: 90%;*/
-    align-self: center;
+    flex-grow: 1;
 }
 
 
@@ -19,17 +17,18 @@
 
 #progress-bar {
     display: block;
-    /*width: 160px;*/
-    /*justify-self: flex-end;*/
-    /*align-self: flex-start;*/
+    height: 20px;
+    width: 100px;
 }
 
 #bars {
     align-self: center;
-    width: 460px;
     display: flex;
     justify-content: space-between;
     gap: 8px;
+    margin-left: 260px;
+    flex-grow: 1;
+    margin-right: 10px;
 
     progress {
         width: auto;

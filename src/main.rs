@@ -15,6 +15,7 @@ use tower_http::cors::CorsLayer;
 use tower_http::services::{ServeDir, ServeFile};
 use tower_http::trace::TraceLayer;
 use tracing::info;
+use tokio::signal;
 
 //noinspection HttpUrlsUsage
 #[tokio::main]
@@ -57,7 +58,10 @@ async fn main() -> Result<(), Error> {
     let version = env!("CARGO_PKG_VERSION");
     println!("Version: {:?}", version);
 
-    axum::serve(listener, app).await.map_err(Error::Run)
+    axum::serve(listener, app)
+        .with_graceful_shutdown(shutdown_signal())
+        .await
+        .map_err(Error::Run)
 }
 
 #[derive(displaydoc::Display, Debug, thiserror::Error)]
@@ -126,5 +130,29 @@ async fn index_handler() -> Result<impl IntoResponse, AppError> {
         glorp_status: data,
     };
 
-    Ok(Html(template.render()?))
+    Ok(Html(Template::render(&template)?))
+}
+
+async fn shutdown_signal() {
+    let ctrl_c = async {
+        signal::ctrl_c().await.expect("no ctrl+c handler")
+    };
+
+    #[cfg(unix)]
+    let terminate = async {
+        signal::unix::signal(signal::unix::SignalKind::terminate())
+            .expect("no SIGTERM handler")
+            .recv()
+            .await;
+    };
+
+    #[cfg(not(unix))]
+    let terminate = std::future::pending::<()>();
+
+    tokio::select! {
+        _ = ctrl_c => {},
+        _ = terminate => {},
+    }
+
+    info!("glorp recieved shutdown signal!")
 }
